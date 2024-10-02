@@ -10,14 +10,14 @@ import DAORelacional.DAOSimulacion;
 public class Simulacion {
 
 	private Integer id=0;					// PK en base de datos
-	private LocalDateTime timestamp;		// Fecha de la simulación
-	private SimEngine se;					// Motor de simulación que se utiliza
-	private Lander lander;					// Módulo que se utiliza
-	private Player user;					// Jugador que la efectúa
-	private Escenario planet;				//	Escenario de la simulación
-	private ArrayList<DatosSim> simData = new ArrayList<DatosSim>();	// Datos de la simulación
+	private LocalDateTime timestamp;		// Fecha de la simulaciï¿½n
+	private SimEngine se;					// Motor de simulaciï¿½n que se utiliza
+	private Lander lander;					// Mï¿½dulo que se utiliza
+	private Player user;					// Jugador que la efectï¿½a
+	private Escenario planet;				//	Escenario de la simulaciï¿½n
+	private ArrayList<DatosSim> simData = new ArrayList<DatosSim>();	// Datos de la simulaciï¿½n
 	private static boolean outOfFuel = false;
-	public boolean __break = false;			// Flag para terminar la simulación ( el usuario abandona)
+	public boolean __break = false;			// Flag para terminar la simulaciï¿½n ( el usuario abandona)
 	// Para abandonar hay que introducir un nivel de impulso = -1
 	
 	// Constructor
@@ -45,10 +45,10 @@ public class Simulacion {
 	public Integer getId() 								{		return id;	}
 	public void setId(Integer id) 						{		this.id = id;	}
 	
-	// Métodos
+	// Mï¿½todos
 	
-	// Añade un instante de simulación a la simulación
-	// Los datos vendrán de SimEngine, sin el dato de fuel en depósito.
+	// Aï¿½ade un instante de simulaciï¿½n a la simulaciï¿½n
+	// Los datos vendrï¿½n de SimEngine, sin el dato de fuel en depï¿½sito.
 	public void addSimData() {
 		DatosSim ds = se.getSimData();
 		ds.setFuel(getLander().getFuel_deposito());
@@ -56,7 +56,7 @@ public class Simulacion {
 	}
 	
 	/**
-	 * Inicializa la simulación
+	 * Inicializa la simulaciï¿½n
 	 * @return
 	 */
 	public void init() {
@@ -74,11 +74,11 @@ public class Simulacion {
 		Double fuel_deposito = lander.getFuel_deposito();
 		DecimalFormat df = new DecimalFormat("+0000.00;-0000.00");
 		
-		if (tiempo == 0) { // inicio de la simulación 
+		if (tiempo == 0) { // inicio de la simulaciï¿½n 
 	        System.out.println("TIEMPO  DISTANCIA   VEL        FUEL      NIVEL IMPULSO"); // Tablero de indicadores
 	        System.out.println("------------------------------------------------------");
 		}
-		 // Muestra valores de los parámetros de la simulación, formateados en columnas
+		 // Muestra valores de los parï¿½metros de la simulaciï¿½n, formateados en columnas
          System.out.printf("%03d    %s    %s    %04d        ",
         		           tiempo,df.format(dist),df.format(vel),fuel_deposito.intValue()
         		          );
@@ -89,16 +89,16 @@ public class Simulacion {
 		Double impulso=0.0;
 		Integer nivel_impulso = 0;
 		
-		// Sólo si tenemos fuel para quemar
+		// Sï¿½lo si tenemos fuel para quemar
 		if (!outOfFuel) {
 			Scanner sc = new Scanner(System.in);
-	        System.out.print("¿(0-9)? >");                      	// Solicita nivel de impulso       
+	        System.out.print("ï¿½(0-9)? >");                      	// Solicita nivel de impulso       
 			nivel_impulso = sc.nextInt();                       	// Lectura de teclado
 			if (nivel_impulso ==-1) {
 				nivel_impulso =0;
-				__break = true;										// Abandonar la simulación
+				__break = true;										// Abandonar la simulaciï¿½n
 			}
-			if (nivel_impulso <0) nivel_impulso =0;					// Sencilla comprobación de límites
+			if (nivel_impulso <0) nivel_impulso =0;					// Sencilla comprobaciï¿½n de lï¿½mites
 			if (nivel_impulso >9) nivel_impulso =9;
 			
 		}
@@ -111,13 +111,13 @@ public class Simulacion {
 			}
 		}
 		
-		if (lander.getFuel_deposito() == 0) nivel_impulso =0;   // Si no queda fuel , no tiene efecto la elección
-		impulso = lander.getPerfPot(nivel_impulso);        		// Elijo, en función del nivel el impulso instantáneo
-		se.setImpulso(impulso);									// Pasar el impulso al motor de simulación.
+		if (lander.getFuel_deposito() == 0) nivel_impulso =0;   // Si no queda fuel , no tiene efecto la elecciï¿½n
+		impulso = lander.getPerfPot(nivel_impulso);        		// Elijo, en funciï¿½n del nivel el impulso instantï¿½neo
+		se.setImpulso(impulso);									// Pasar el impulso al motor de simulaciï¿½n.
 		// Consumo de combustible
-        lander.setFuel_a_quemar( impulso * 2);      			// No es una simulación realista
+        lander.setFuel_a_quemar( impulso * 2);      			// No es una simulaciï¿½n realista
         lander.setFuel_deposito(lander.getFuel_deposito() - lander.getFuel_a_quemar());      // Actualizo la reserva de fuel
-		if (lander.getFuel_deposito()<0) 	{					// Eliminar incosistencias en el cálculo
+		if (lander.getFuel_deposito()<0) 	{					// Eliminar incosistencias en el cï¿½lculo
 				lander.setFuel_deposito(0);  
 				outOfFuel = true;
 		} // Sin fuel
@@ -125,8 +125,8 @@ public class Simulacion {
 	
 	public Boolean show_result() {
 		
-		Boolean flag = false;				// Terminación sin salvar puntuación
-        // Comprobar la condiciones de aterrizaje y mostrar información sobre el mismo.
+		Boolean flag = false;				// Terminaciï¿½n sin salvar puntuaciï¿½n
+        // Comprobar la condiciones de aterrizaje y mostrar informaciï¿½n sobre el mismo.
 		Double vel_fin = se.getVel();
 		Double dist_fin =se.getDist();
 		Integer tiempo = se.getTiempo();
@@ -154,19 +154,19 @@ public class Simulacion {
 			}
 		}
 		else {
-		    System.out.println("\nSIMULACIÓN INTERRUMPIDA POR EL USARIO");
+		    System.out.println("\nSIMULACIï¿½N INTERRUMPIDA POR EL USARIO");
             System.out.println("------------------------------------------------");
-            System.out.println("TIEMPO DE SIMULACIÓN : " + tiempo + " s");
+            System.out.println("TIEMPO DE SIMULACIï¿½N : " + tiempo + " s");
             System.out.println("FUEL EN DEPOSITO     : " + fuel_deposito + " l");
             System.out.println("DISTANCIA A OBJETIVO : " + dist_fin + " m");
             System.out.println("------------------------------------------------");	
             flag = false;	// no salvar
-		} // Misión finalizada o interrumpida
+		} // Misiï¿½n finalizada o interrumpida
 	 return flag;	
 	}  // show_result
 	
 	/**
-	 * Salva los datos de simulación en base de datos
+	 * Salva los datos de simulaciï¿½n en base de datos
 	 * @return
 	 */
 	public boolean saveSim(String Modo) {

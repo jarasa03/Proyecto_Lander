@@ -2,26 +2,26 @@ package Modelo;
 
 public class PerfilPot {
 
-	private int id;
-	public float[] potencia = new float[10];
-	
-	public PerfilPot() {}
+    private int id;
+    public float[] potencia = new float[10];
 
-	public int getId() {
-		return id;
-	}
+    public PerfilPot() {
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public float[] getPotencia() {
-		return potencia;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setPotencia(float[] potencia) {
-		this.potencia = potencia;
-	}
-	
-	
+    public float[] getPotencia() {
+        return potencia;
+    }
+
+    public void setPotencia(float[] potencia) {
+        this.potencia = potencia;
+    }
+
 }
