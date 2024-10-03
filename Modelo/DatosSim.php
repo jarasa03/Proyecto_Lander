@@ -11,7 +11,8 @@ class DatosSIM
     private $tiempo = 0; // 0 para el entero
 
     // Constructor
-    public function __construct($dist, $acel, $vel, $impulso, $fuel, $tiempo) {
+    public function __construct($dist, $acel, $vel, $impulso, $fuel, $tiempo)
+    {
         $this->dist = $dist;
         $this->acel = $acel;
         $this->vel = $vel;
@@ -21,44 +22,57 @@ class DatosSIM
     }
 
     // Getters & Setters
-    public function get_dist() {
+    public function get_dist()
+    {
         return $this->dist;
     }
-    public function get_acel() {
+    public function get_acel()
+    {
         return $this->acel;
     }
-    public function get_vel() {
+    public function get_vel()
+    {
         return $this->vel;
     }
-    public function get_impulso() {
+    public function get_impulso()
+    {
         return $this->impulso;
     }
-    public function get_fuel() {
+    public function get_fuel()
+    {
         return $this->fuel;
     }
-    public function get_tiempo() {
+    public function get_tiempo()
+    {
         return $this->tiempo;
     }
-    public function set_dist($dist) {
+    public function set_dist($dist)
+    {
         $this->dist = $dist;
     }
-    public function set_acel($acel) {
+    public function set_acel($acel)
+    {
         $this->acel = $acel;
     }
-    public function set_vel($vel) {
+    public function set_vel($vel)
+    {
         $this->vel = $vel;
     }
-    public function set_impulso($impulso) {
+    public function set_impulso($impulso)
+    {
         $this->impulso = $impulso;
     }
-    public function set_fuel($fuel) {
+    public function set_fuel($fuel)
+    {
         $this->fuel = $fuel;
     }
-    public function set_tiempo($tiempo) {
-    $this->tiempo = $tiempo;
+    public function set_tiempo($tiempo)
+    {
+        $this->tiempo = $tiempo;
     }
 
-    public function __tostring() {
+    public function __tostring()
+    {
         return "";
     }
 
