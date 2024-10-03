@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lander</title>
-</head>
-<body>
-    <?php
-
+<?php
     class Lander{
-
 /* Variables */
-
 private $id = 0;
 private $nombre;
 private $impulso;
@@ -21,7 +10,6 @@ private $fuel_deposito;
 private $tiempo;
 private $res_tren;
 private $perfPot;
-
 /* Constructor */
 public function __construct($nombre,$fuel_deposito,$res_tren){
     $this ->nombre = $nombre;
@@ -86,8 +74,4 @@ public function getres_tren(){
 public function __tostring(){
     return $this-> nombre . " (fuel) " . $this-> fuel_deposito . " (Tren AT ) " . $this -> res_tren;
 }
-    }
-    ?>
-
-</body>
-</html>
+}
