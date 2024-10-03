@@ -3,12 +3,12 @@
 class DatosSIM
 {
     // Zona de declaración de variables
-    private $dist = double(0);
-    private $acel = double(0);
-    private $vel = double(0);
-    private $impulso = double(0);
-    private $fuel = double(0);
-    private $tiempo = int(0);
+    private $dist = 0.0; // 0.0 Para valores double
+    private $acel = 0.0;
+    private $vel = 0.0;
+    private $impulso = 0.0;
+    private $fuel = 0.0;
+    private $tiempo = 0; // 0 para el entero
 
     // Constructor
     public function __construct($dist, $acel, $vel, $impulso, $fuel, $tiempo) {
