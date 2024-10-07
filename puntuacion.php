@@ -1,67 +1,79 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datos de Simulacion</title>
-    <style>
-        body{
-            background-color: slategrey;
-        }
-        h1{
-            text-align: center;
-        }
-        table{
-            width: 100%;
-            border-collapse: collapse;
-        }
-        td{
-            border: 2px solid black;
-            padding: 8px;
-            text-align: center;
-        }
-        tr{
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
-<body>
-    <form action="inicio.php" method="get">
-        <button type="submit">Volver</button>
-    </form>
-    <h1>Datos de Simulación</h1>
-    <table>
-        <tr>
-            <td>id_pun</td>
-            <td>id_usuario</td>
-            <td>id_simulacion</td>
-            <td>tiempo</td>
-            <td>fuel</td>
-            <td>fecha</td>
-        </tr>
-    <?php
+<?php
 
-include "Modelo\puntuacion.php";
+class Puntuacion
+{
 
-$datospuntuacion = [
-    new puntuacion(1, 1, 6, 220, 2662, "2024-09-08 20:33:11")
+    private $id_puntuacion;
+    private $id_Usuario;
+    private $id_simulacion;
+    private $tiempo;
+    private $fuel;
+    private $fecha;
 
-];
-foreach ($datospuntuacion as $dato) {
-    echo '<tr>';
-    echo '<td>' . $dato->getId_Puntuacion() . '</td>';
-    echo '<td>' . $dato->getId_Usuario() . '</td>';
-    echo '<td>' . $dato->getIdSimulacion() . '</td>';
-    echo '<td>' . $dato->getTiempo() . '</td>';
-    echo '<td>' . $dato->getFuel() . '</td>';
-    echo '<td>' . $dato->getFecha() . '</td>';
-    echo '<tr>';
+    public function __construct($id_puntuacion, $id_Usuario, $id_simulacion, $tiempo, $fuel, $fecha)
+    {
+        $this->id_puntuacion = $id_puntuacion;
+        $this->id_Usuario = $id_Usuario;
+        $this->id_simulacion = $id_simulacion;
+        $this->tiempo = $tiempo;
+        $this->fuel = $fuel;
+        $this->fecha = $fecha;
+    }
+
+    public function getId_Usuario()
+    {
+        return $this->id_Usuario;
+    }
+
+    public function setId_Usuario($id_Usuario)
+    {
+        $this->id_Usuario = $id_Usuario;
+    }
+
+    public function getTiempo()
+    {
+        return $this->tiempo;
+    }
+
+    public function setTiempo($tiempo)
+    {
+        $this->tiempo = $tiempo;
+    }
+
+    public function getFuel()
+    {
+        return $this->fuel;
+    }
+
+    public function setFuel($fuel)
+    {
+        $this->fuel = $fuel;
+    }
+
+    public function getFecha()
+    {
+        return $this->fecha;
+    }
+
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+    }
+    public function getId_Puntuacion()
+    {
+        return $this->id_puntuacion;
+    }
+    public function setId_Puntuacion($id_puntuacion)
+    {
+        $this->id_Puntuacion = $id_puntuacion;
+    }
+    public function getIdSimulacion()
+    {
+        return $this->id_simulacion;
+    }
+    public function setId_Simulacion($id_simulacion)
+    {
+        $this->id_simulacion = $id_simulacion;
+    }
+
 }
-echo '</table>';
-?>
-    </table>
-    <form action="inicio.php" method="get">
-        <button type="submit">Volver</button>
-    </form>
-</body>
-</html>
