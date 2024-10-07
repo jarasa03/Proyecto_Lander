@@ -42,7 +42,7 @@
         </tr>
     <?php
 
-    include "ClasesPhp\DatosSim.php";
+    include "Modelo\DatosSim.php";
 
     $datosSimulacion = [
         new DatosSIM(1,0,0,2800,3500,6),
