@@ -1,71 +1,90 @@
 <?php
-class Simulacion{
-    private $id=0; //PK en base de datos
+class Simulacion
+{
+    private $id = 0; //PK en base de datos
     private $timestamp; // Feccha de simulación
     private $se; // Motor de simulaciónque se utiliza
     private $lander; //Modulo que se utiliza
     private $user; //Jugador que la afecta
     private $planet; // Escenario de la simulación
     private $simData = array(); //Datos de la simulación
-    private static $outOfFuel=false; 
+    private static $outOfFuel = false;
     private $__break = false; // Flag para terminar la simulación (el usuario abandona)
     // Para abandonar hay que introducir un nivel de impulso = -1
 
     // Constructor
-    public function __Simulacion($_user,$lander,$planet){
-        $this->user=$_user;
-        $this->lander=$lander;
-        $this->planet=$planet;
-        $this->timestamp=new DateTime();
+    public function __construct($id, $_user, $lander, $planet, $timestamp)
+    {
+        $this->id = $id;
+        $this->user = $_user;
+        $this->lander = $lander;
+        $this->planet = $planet;
+        $this->timestamp = $timestamp;
     }
-    public function getTimeStamp(){
+    public function getTimeStamp()
+    {
         return $this->timestamp;
     }
-    public function setTimeStamp($timestamp){
-        $this->timestamp=$timestamp;
+    public function setTimeStamp($timestamp)
+    {
+        $this->timestamp = $timestamp;
     }
-    public function getSe(){
+    public function getSe()
+    {
         return $this->se;
     }
-    public function setSe($se){
-        $this->se=$se;
+    public function setSe($se)
+    {
+        $this->se = $se;
     }
-    public function getLander(){
+    public function getLander()
+    {
         return $this->lander;
     }
-    public function setLander($lander){
-        $this->lander=$lander;
+    public function setLander($lander)
+    {
+        $this->lander = $lander;
     }
-    public function getUser(){
+    public function getUser()
+    {
         return $this->user;
     }
-    public function setUser($user){
-        $this->user=$user;
+    public function setUser($user)
+    {
+        $this->user = $user;
     }
-    public function getPlanet(){
+    public function getPlanet()
+    {
         return $this->planet;
     }
-    public function setPlanet($planet){
-        $this->planet=$planet;
+    public function setPlanet($planet)
+    {
+        $this->planet = $planet;
     }
-    public function setSimData(array $simData){
-        $this->simData=$simData;
+    public function setSimData(array $simData)
+    {
+        $this->simData = $simData;
     }
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
-    public function setId($id){
-        $this->id=$id;
+    public function setId($id)
+    {
+        $this->id = $id;
     }
-    public function addSimData(){
+    public function addSimData()
+    {
         $ds = $this->se->getSimData();
         $ds->setFuel($this->getLander()->getFuel());
-        $this->simData[]=$ds;
+        $this->simData[] = $ds;
     }
-    public function init():void{
+    public function init(): void
+    {
         $this->se = new SimEngine($this->planet->getHe(), $this->planet->getVe(), $this->planet->get_G());
     }
-    public function muestraPanel(){
+    public function muestraPanel()
+    {
         $vel = $this->se->getVel();
         $dist = $this->se->get_dist();
         $tiempo = $this->se->getTiempo();
@@ -73,15 +92,15 @@ class Simulacion{
 
         $numbeR = 123.456;
         $formattNumber = sprintf("%+07.2f", $numbeR);
-        echo $formattNumber."\n";
+        echo $formattNumber . "\n";
 
         $number = -123.456;
         $formattNumber = sprintf("%+07.2f", $number);
-        echo $formattNumber."\n";
+        echo $formattNumber . "\n";
 
-        if ($tiempo==0) {
-            echo "TIEMPO  DISTANCIA   VEL        FUEL      NIVEL IMPULSO"."\n";
-            echo "-------------------------------------------------------"."\n";
+        if ($tiempo == 0) {
+            echo "TIEMPO  DISTANCIA   VEL        FUEL      NIVEL IMPULSO" . "\n";
+            echo "-------------------------------------------------------" . "\n";
         }
 
         $formattedDist = sprintf("%+07.2f", $dist);
@@ -89,7 +108,8 @@ class Simulacion{
 
         printf("%03d %s %s %04d", $tiempo, $formattedDist, $formattedVel, intval($fuel_deposito));
     }
-    public function aplicaMotor($l){
+    public function aplicaMotor($l)
+    {
 
         $impulso = 0.0;
         $nivel_impuldo = 0;
@@ -101,37 +121,46 @@ class Simulacion{
             $nivel_impulso = $input; // Lectura de teclado
             if ($nivel_impulso == -1) {
                 $nivel_impulso = 0;
-                $__break = true;      // Abandonar la simulación
+                $__break = true; // Abandonar la simulación
             }
-            if ($nivel_impulso < 0) $nivel_impulso = 0; // Sencilla comprobación de límites
-            
-            if ($nivel_impulso > 0) $nivel_impulso = 9;
-        }
-        else{
+            if ($nivel_impulso < 0) {
+                $nivel_impulso = 0;
+            }
+            // Sencilla comprobación de límites
+
+            if ($nivel_impulso > 0) {
+                $nivel_impulso = 9;
+            }
+
+        } else {
             printf("SIN FUEL , CAIDA LIBRE!");
             sleep(1);
         }
 
-        if ($this->lander->getFuel_deposito() == 0) $nivel_impulso = 0; // Si no queda fuel, no  tiene efecto la eleccón
-        $impulso = $this->lander->getPerfPot($nivel_impulso);            // Elijo, en función del nivel el impulso instantaneo
-        $this->se->set_impulso($impulso);                                // Pasar el impulso al motot de simulación
+        if ($this->lander->getFuel_deposito() == 0) {
+            $nivel_impulso = 0;
+        }
+        // Si no queda fuel, no  tiene efecto la eleccón
+        $impulso = $this->lander->getPerfPot($nivel_impulso); // Elijo, en función del nivel el impulso instantaneo
+        $this->se->set_impulso($impulso); // Pasar el impulso al motot de simulación
         //Consumo de combustible
-        $this->lander->setFuel_a_quemar($impulso * 2);                   // No es una simulación realista
+        $this->lander->setFuel_a_quemar($impulso * 2); // No es una simulación realista
         $this->lander->setFuel_deposito($this->lander->getFuel_deposito() - $this->lander->getFuel_a_quemar()); // Actualizo la reserva de fuel
 
-        if ($this->lander->getFuel_deposito() < 0){                      // Eliminar inconsistencias en el cálculo
+        if ($this->lander->getFuel_deposito() < 0) { // Eliminar inconsistencias en el cálculo
             $this->lander->setFuel_deposito(0);
             $outOfFuel = true;
         } // Sin fuel
     }
 
-    public function show_result(){
-        $flag = false;         // Terminación sin salvar puntación
+    public function show_result()
+    {
+        $flag = false; // Terminación sin salvar puntación
         $vel_fin = $this->se->getVel();
         $dist_fin = $this->se->get_dist();
         $tiempo = $this->se->get_tiempo();
         $fuel_deposito = $this->lander->getFuel_deposito();
-        
+
         $formattedVel_fin = sprintf("%+07.2f", $vel_fin);
         $formattedDist_fin = sprintf("%+07.2f", $dist_fin);
 
@@ -139,22 +168,21 @@ class Simulacion{
         echo "Velocidad final: $formattedVel_fin\n";
         echo "Distancia final: $formattedDist_fin\n";
         echo "Fuel en depósito: " . intval($fuel_deposito) . "\n";
-        
+
         if ($flag === false) {
             echo "Terminación sin salvar la puntuación";
         }
 
         if (!$this->__break) {
-            $flag = (abs($this->se->getVel()>$this->lander->getRes_tren()));
+            $flag = (abs($this->se->getVel() > $this->lander->getRes_tren()));
             if ($flag) {
                 echo "HAS ESTRELLADO LA NAVE\n";
                 echo "------------------------------------------------\n";
                 echo "VELOCIDAD DE ENTRADA    : " . sprintf("%+07.2", $vel_fin) . "m/s\n";
-                echo "HAS HECHO UN CRATER DE  : ". sprintf("%+07.2", abs($dist_fin)) . " m\n";
+                echo "HAS HECHO UN CRATER DE  : " . sprintf("%+07.2", abs($dist_fin)) . " m\n";
                 echo "------------------------------------------------\n";
                 $flag = false; // no slavar
-            }
-            else{
+            } else {
                 echo "\nATERRIZAJE EXITOSO!!\n";
                 echo "------------------------------------------------\n";
                 echo "TIEMPO DE SIMULACIÓN : " . $tiempo . " s\n";
@@ -171,30 +199,32 @@ class Simulacion{
          * @return
          */
     }
-    public function saveSim($Modo){
-            $ds = new DAOSimulacion($Modo);
+    public function saveSim($Modo)
+    {
+        $ds = new DAOSimulacion($Modo);
 
-            try{
-                if ($ds->saveSimulacion($this)) {
-                    echo "Datos Almacenados en base de datos.\n";
-                }
-                $ds->_c=null;
-            } catch (PDOException $e) {
-                echo "Error: " . $e->getMessage();
+        try {
+            if ($ds->saveSimulacion($this)) {
+                echo "Datos Almacenados en base de datos.\n";
             }
-            return true;
+            $ds->_c = null;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        return true;
     }
     /**
      * Registra el marcador obtenido en la base de datos
      * Es llamado de forma interna por saveSim()
-     * @return 
+     * @return
      */
 
-     private function saveScore(){
+    private function saveScore()
+    {
         return true;
-     }
-     public function show(){
+    }
+    public function show()
+    {
         //Salida por pantalla
-     }
+    }
 }
-?>
